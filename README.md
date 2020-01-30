@@ -1,8 +1,14 @@
 # UI-Schema Create-React Example w/ Material-UI
 
-Example project for [@ui-schema/ui-schema](https://github.com/ui-schema/ui-schema).
+Example project for [@ui-schema/ui-schema](https://github.com/ui-schema/ui-schema) with material ui.
 
-Look in [src/App.js](src/App.js) for the example code.
+Look in [src/App.js](./src/App.js) and [src/UserSettings.js](./src/UserSettings.js) for the example code.
+
+---
+
+**🚀 [Live Demo: UI-Schema with Material Design on repl.co](https://ui-schema-build.elbakerino.repl.co)**
+
+---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
