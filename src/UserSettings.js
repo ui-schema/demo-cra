@@ -55,18 +55,17 @@ const schema1 = {
     ]
 };
 
-let data1 = false;
-try {
-    data1 = JSON.parse(window.localStorage.getItem('user_settings'));
-} catch(e) {
-    // not existing user_settings
-}
-
 const UserSettings = () => {
     const [validity, setValidity] = React.useState(createMap());
-    const [data, setData] = React.useState(
-        createOrderedMap(data1 || {})
-    );
+    const [data, setData] = React.useState(() => {
+        let data1 = false;
+        try {
+            data1 = JSON.parse(window.localStorage.getItem('user_settings'));
+        } catch(e) {
+            // not existing user_settings
+        }
+        return createOrderedMap(data1 || {})
+    });
     const [schema,/* setSchema */] = React.useState(createOrderedMap(schema1));
 
     const onChange = React.useCallback((handler) => {
