@@ -1,6 +1,7 @@
 import React from 'react';
 import {SchemaEditor, createMap, createOrderedMap} from "@ui-schema/ui-schema";
 import {widgets} from "@ui-schema/ds-material";
+import {Link, Typography} from "@material-ui/core";
 
 const schema1 = {
     type: "object",
@@ -97,7 +98,10 @@ const UserSettings = () => {
                 they can use the context of the editor for working
             */}
         </SchemaEditor>
-        <p>This form saves the values onChange in the browser and restores it at page-reload, look in <a href={'https://github.com/ui-schema/demo-cra/blob/master/src/UserSettings.js'}>src/UserSettings.js</a></p>
+
+        <Typography component={'p'} variant={'body1'} style={{marginTop: 24, marginBottom: 24}}>
+            This form saves the values onChange in the browsers <code>localStorage</code> and restores it at component mount, code in <Link href={'https://github.com/ui-schema/demo-cra/blob/master/src/Schema/UserSettings.js'}>src/Schema/UserSettings.js</Link>
+        </Typography>
     </React.Fragment>;
 };
 
