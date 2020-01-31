@@ -1,14 +1,16 @@
 # UI-Schema Create-React Example w/ Material-UI
 
+[![Travis (.org) branch](https://img.shields.io/travis/ui-schema/demo-cra/master?style=flat-square)](https://travis-ci.org/ui-schema/demo-cra) [![Run on Repl.it](https://repl.it/badge/github/ui-schema/demo-cra)](https://repl.it/github/ui-schema/demo-cra)
+
 Example project for [@ui-schema/ui-schema](https://github.com/ui-schema/ui-schema) with material ui.
 
 Look in [src/Schema/DemoEditor.js](./src/Schema/DemoEditor.js) and [src/Schema/UserSettings.js](./src/Schema/UserSettings.js) for the example code.
 
 ---
 
-**🚀 [Live Editor: CRA + UI-Schema + Material Design on repl.it](https://repl.it/@elbakerino/ui-schema-cra)**
+**🚀 [Live Demo: CRA + UI-Schema + Material Design on repl.it](https://repl.it/@elbakerino/ui-schema-cra)**
 
-**[Fullscreen Demo](https://ui-schema-build.elbakerino.repl.co)** - *[build-src](https://repl.it/@elbakerino/ui-schema-build)*
+**[Fullscreen Demo](https://ui-schema-build.elbakerino.repl.co)**
 
 ---
 

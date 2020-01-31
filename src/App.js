@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import {Link, Typography, Button, Paper} from "@material-ui/core";
+import {Typography, Button, Paper} from "@material-ui/core";
 import DemoEditor from "./Schema/DemoEditor";
 import UserSettings from "./Schema/UserSettings";
-import GithubLogo from "./GithubLogo";
+import ProjectLinks from "./ProjectLinks";
 
 function App() {
     const [showSettings, setShowSettings] = React.useState(false);
@@ -20,17 +20,7 @@ function App() {
                 </Paper>
 
                 <Paper style={{margin: 12, padding: 24}}>
-                    <Typography component={'p'} variant={'body1'}>
-                        <span role={'img'} aria-label={'Quick Evaluate'}>🚀</span> <Link href={'https://repl.it/@elbakerino/ui-schema-cra'}>Live Editor on repl.it</Link>
-                    </Typography>
-                    <hr style={{opacity: 0.2}}/>
-                    <Typography component={'p'} variant={'body1'}>
-                        <span role={'img'} aria-label={'Documentation'}>📖</span> <Link href={'https://github.com/ui-schema/ui-schema/blob/master/README.md'}>Documentation, Current Status</Link>
-                    </Typography>
-                    <hr style={{opacity: 0.2}}/>
-                    <Typography component={'p'} variant={'body1'}>
-                        <GithubLogo/> Demo Repository: <Link href={'https://github.com/ui-schema/demo-cra'}>ui-schema/demo-cra</Link>
-                    </Typography>
+                    <ProjectLinks/>
                 </Paper>
 
                 <Paper style={{margin: 12, padding: 24}}>
