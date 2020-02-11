@@ -1,10 +1,6 @@
-import React from 'react';
-import {Button, Link, Typography} from "@material-ui/core";
-import {Refresh} from "@material-ui/icons";
-import {SchemaEditor, isInvalid, createMap, createOrderedMap} from "@ui-schema/ui-schema";
-import {widgets} from "@ui-schema/ds-material";
+import {createOrderedMap} from "@ui-schema/ui-schema";
 
-const schema1 = {
+const schemaMain = createOrderedMap({
     type: "object",
     title: "headline",
     properties: {
@@ -177,67 +173,12 @@ const schema1 = {
         'layouts',
         'size'
     ]
-};
+});
 
-const data1 = {
+const dataMain = createOrderedMap({
     stepper: {'step-1': {name: 'Max'}},
     headline: 'Some Demo Content Headline',
-};
+});
 
-const Editor = () => {
-    const [showValidity, setShowValidity] = React.useState(false);
-    const [validity, setValidity] = React.useState(createMap());
-    const [data, setData] = React.useState(undefined);
-    const [schema, setSchema] = React.useState(undefined);
+export {schemaMain, dataMain}
 
-    React.useEffect(() => {
-        // simulating getting `schema` and `data` from an API
-        setTimeout(() => {
-            setData(createOrderedMap(data1));
-            setSchema(createOrderedMap(schema1));
-        }, 1200);
-    }, [setData, setSchema]);
-
-    if(!data || !schema) return <div style={{textAlign: 'center', margin: '75px 0'}}>
-        <Refresh className={'refresh-spin'} fontSize={'large'}/>
-        <p>Loading Schema & Data</p>
-    </div>;
-
-    return <React.Fragment>
-        <SchemaEditor
-            schema={schema}
-            store={data}
-            onChange={setData}
-            widgets={widgets}
-            validity={validity}
-            showValidity={showValidity}
-            onValidity={setValidity}
-        >
-            {/*
-                add children that should be under the schema editor,
-                they can use the context of the editor for working
-            */}
-        </SchemaEditor>
-        <Button
-            style={{marginTop: 24}}
-            onClick={() => {
-                console.log('data-store: ', data.toJS());
-                console.log('is-invalid: ', !!isInvalid(validity));
-                isInvalid(validity) ?
-                    setShowValidity(true) :
-                    console.log('should do some action here')
-            }}
-            variant={'contained'}
-        >send!</Button>
-
-        <Typography component={'p'} variant={'body1'} style={{marginTop: 24}}>
-            See <code>console.log</code> after clicking on <code>SEND!</code>
-        </Typography>
-        <hr style={{opacity: 0.2}}/>
-        <Typography component={'p'} variant={'body1'}>
-            Code of this form/schema: <Link href={'https://github.com/ui-schema/demo-cra/blob/master/src/Schema/DemoEditor.js'}>src/Schema/DemoEditor.js</Link>
-        </Typography>
-    </React.Fragment>;
-};
-
-export default Editor;

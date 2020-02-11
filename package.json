@@ -1,18 +1,23 @@
 {
     "name": "@ui-schema/demo-cra",
-    "version": "0.2.1",
+    "version": "0.3.0",
     "private": true,
     "dependencies": {
-        "@material-ui/core": "^4.9.0",
-        "@material-ui/icons": "^4.5.1",
+        "@material-ui/core": "^4.9.2",
+        "@material-ui/icons": "^4.9.1",
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.4.0",
         "@testing-library/user-event": "^7.2.1",
-        "@ui-schema/ds-material": "0.0.4",
-        "@ui-schema/ui-schema": "0.0.4",
+        "@ui-schema/ds-material": "0.0.5",
+        "@ui-schema/ui-schema": "0.0.5",
+        "ace-builds": "^1.4.8",
         "immutable": "^4.0.0-rc.12",
         "react": "^16.12.0",
+        "react-ace": "^8.0.0",
         "react-dom": "^16.12.0",
+        "react-loadable": "^5.5.0",
+        "react-markdown": "^4.3.1",
+        "react-router-dom": "^5.1.2",
         "react-scripts": "3.2.0"
     },
     "scripts": {
