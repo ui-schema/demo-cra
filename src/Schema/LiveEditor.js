@@ -1,37 +1,77 @@
 import React from 'react';
-import {Paper, Typography, useTheme} from "@material-ui/core";
-import {FormatSize, FormatShapes, Code, SpaceBar, RestorePage, HorizontalSplit, VerticalSplit} from "@material-ui/icons";
+import {Box, Paper, Typography, useTheme} from "@material-ui/core";
+import {SpeakerNotes, SpeakerNotesOff, Add, Remove, FormatSize, FormatShapes, Code, SpaceBar, RestorePage, HorizontalSplit, VerticalSplit} from "@material-ui/icons";
 import {isInvalid, createMap, createOrderedMap, SchemaEditorProvider, SchemaRootRenderer, useSchemaData} from "@ui-schema/ui-schema";
 import {widgets} from "@ui-schema/ds-material";
 import Nav from "../component/Nav";
 import {RichCodeEditor} from "../component/RichCodeEditor";
+import {Markdown} from "../component/Markdown";
 
 const IconInput = ({
                        verticalSplit, title,
                        onChange, value, min,
                        Icon, opacity = 0.4, scale = 0.8,
                    }) => {
+    const {palette} = useTheme();
+    const [hasFocus, setFocus] = React.useState(false);
+    const [hasHover, setHover] = React.useState(false);
+
     return <div
-        style={{margin: verticalSplit ? '0 0 6px 0' : '3px 6px 3px 0', flexShrink: 0, padding: 6, display: 'flex', position: 'relative'}}
-    ><span style={{margin: 'auto'}}>
+        style={{margin: verticalSplit ? '0 0 6px 0' : '3px 6px 3px 0', border: '1px solid lightgrey', zIndex: 2, flexShrink: 0, padding: 6, display: 'flex', position: 'relative'}}
+        onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+    >
+        {hasFocus || hasHover ? <button
+            style={{
+                position: 'absolute', padding: 0,
+                top: verticalSplit ? 0 : 'calc(-100% - 1px)', right: verticalSplit ? '-100%' : 0, left: verticalSplit ? 'auto' : 0,
+                width: '100%', height: '100%', border: 0,
+                background: palette.text.primary, color: palette.background.default
+            }}
+            onFocus={() => setFocus(true)}
+            onBlur={() => setFocus(false)}
+            onClick={() => onChange(value + 1)}
+        >
+            <Add fontSize={'small'} style={{transform: 'scale(0.85)'}} fill={palette.background.default}/>
+        </button> : null}
+
         <input type={'number'} className={'no-spin'}
                title={title}
+               onFocus={() => setFocus(true)}
+               onBlur={() => setFocus(false)}
                style={{
                    position: 'absolute', zIndex: 2, top: 0, right: 0, bottom: 0, left: 0,
-                   background: 'transparent', border: '1px solid lightgrey', boxSizing: 'border-box',
+                   background: 'transparent', border: 0, boxSizing: 'border-box',
                    textAlign: 'center', fontSize: '0.9rem', fontFamily: 'Consolas, "Lucida Console", Courier, monospace', fontWeight: 'bold',
-                   width: '100%', paddingBottom: 10
+                   width: '100%', height: '100%', paddingBottom: 10,
+                   //width: '100%', paddingTop: hasFocus ? 5 : 3, paddingBottom: hasFocus ? 5 : 7
                }}
-               value={value} onChange={onChange} min={min}/>
+               value={value} onChange={e => onChange(e.target.value * 1)} min={min}/>
+
+        {hasFocus || hasHover ? <button
+            style={{
+                position: 'absolute', padding: 0,
+                width: '100%', height: '100%', border: 0,
+                background: palette.text.primary, color: palette.background.default,
+                bottom: verticalSplit ? 0 : 'calc(-100% - 1px)', left: verticalSplit ? '-100%' : 0, right: verticalSplit ? 'auto' : 0,
+            }}
+            onFocus={() => setFocus(true)}
+            onBlur={() => setFocus(false)}
+            onClick={() => onChange(value - 1)}
+            disabled={value === min}
+        >
+            <Remove fontSize={'small'} style={{transform: 'scale(0.85)'}} fill={palette.background.default}/>
+        </button> : null}
+
         <Icon
             style={{visibility: 'hidden', display: 'block'}}
             fontSize={'small'}
         />
         <Icon
-            style={{opacity, display: 'block', transform: 'scale(' + scale + ')', position: 'absolute', bottom: -2}}
+            style={{opacity, display: 'block', transform: 'scale(' + scale + ')', position: 'absolute', bottom: -3}}
+            /*style={{opacity, display: 'block', transform: 'scale(' + hasFocus ? 0.3 : scale + ')', position: 'absolute', bottom: hasFocus ? -4 : -2}}*/
             fontSize={'small'}
         />
-    </span></div>
+    </div>
 };
 
 const unFocus = e => {
@@ -41,7 +81,7 @@ const unFocus = e => {
     do {
         if(parent.nodeName === 'BUTTON') {
             let t = parent;
-            setTimeout(() => t.blur(), 400);
+            setTimeout(() => t ? t.blur() : undefined, 400);
             found = true
         } else parent = parent.parentElement;
     } while(!found && parent);
@@ -54,6 +94,7 @@ const EditorsNav = ({
                         activeSchema, changeSchema,
                         toggleRichIde, richIde,
                         schemas,
+                        showInfo, setShowInfo, hasInfo,
                     }) => <div
     style={{
         marginBottom: verticalSplit ? 'auto' : 0, marginLeft: verticalSplit ? 12 : 0, display: 'flex',
@@ -62,16 +103,16 @@ const EditorsNav = ({
     }}
 >
     {verticalSplit ? null : <div style={{marginRight: 'auto', display: 'flex'}}>
-        <SchemaChanger schemas={schemas} style={{margin: 'auto 4px'}} activeSchema={activeSchema} changeSchema={changeSchema}/>
+        <SchemaChanger schemas={schemas} style={{margin: 'auto 4px'}} activeSchema={activeSchema} changeSchema={changeSchema} setShowInfo={setShowInfo} showInfo={showInfo} hasInfo={hasInfo}/>
     </div>}
 
     <IconInput
-        title={'Font Size'} value={fontSize} onChange={e => setFontSize(e.target.value * 1)}
+        title={'Font Size'} value={fontSize} onChange={setFontSize}
         verticalSplit={verticalSplit} min={6}
         Icon={FormatSize}
     />
     <IconInput
-        title={'Indentation Size'} value={tabSize} onChange={e => setTabSize(e.target.value * 1)}
+        title={'Indentation Size'} value={tabSize} onChange={setTabSize}
         verticalSplit={verticalSplit} min={2}
         Icon={SpaceBar} opacity={0.5} scale={0.9}
     />
@@ -155,11 +196,11 @@ const SchemaDataDebug = ({vertical, tabSize, fontSize, richIde}) => {
     />
 };
 
-const SchemaChanger = ({activeSchema, changeSchema, style, schemas}) => {
+const SchemaChanger = ({activeSchema, changeSchema, style, schemas, setShowInfo, showInfo, hasInfo}) => {
     const {palette} = useTheme();
 
     return <Typography component={'label'} variant={'overline'} style={{...style, lineHeight: '2.4', display: 'flex', flexWrap: 'wrap'}}>
-        <span style={{padding: '0 4px', background: palette.text.primary, color: palette.background.default, flexShrink: 0}}>Active Example:</span>
+        <span style={{padding: '0 4px', background: palette.text.primary, color: palette.background.default, flexShrink: 0}}>Active Example</span>
         <Typography
             component={'select'} variant={'overline'}
             value={activeSchema} onChange={e => changeSchema(e.target.value * 1)}
@@ -169,25 +210,29 @@ const SchemaChanger = ({activeSchema, changeSchema, style, schemas}) => {
                 <option key={i} value={i}>{schema[0]}</option>
             ))}
         </Typography>
+
+        {hasInfo ? <button
+            style={{border: 0, background: 'transparent', display: 'flex'}}
+            onClick={() => setShowInfo(p => !p)}
+        ><span style={{margin: 'auto 0'}}>
+            {showInfo ? <SpeakerNotesOff fontSize={'small'}/> : <SpeakerNotes fontSize={'small'}/>}
+        </span></button> : null}
     </Typography>
 };
 
 const initialLocalBoolean = (key, def) => {
     if(
-        typeof window.localStorage.getItem('live-editor-vertical') !== 'undefined' &&
-        window.localStorage.getItem('live-editor-vertical') !== null &&
-        !isNaN(window.localStorage.getItem('live-editor-vertical') * 1)
+        typeof window.localStorage.getItem(key) !== 'undefined' &&
+        window.localStorage.getItem(key) !== null &&
+        !isNaN(window.localStorage.getItem(key) * 1)
     ) {
-        return !!(window.localStorage.getItem('live-editor-vertical') * 1);
+        return !!(window.localStorage.getItem(key) * 1);
     }
 
     return def;
 };
 
 const Editor = ({schemas}) => {
-    const [showValidity, setShowValidity] = React.useState(false);
-    const [validity, setValidity] = React.useState(createMap());
-
     // Custom State for Live-Editor
     let initialVertical = initialLocalBoolean('live-editor-vertical', 800 < window.innerWidth);// Vertical by default for desktop
     let initialRichIde = initialLocalBoolean('live-editor-rich-ide', true);
@@ -197,8 +242,14 @@ const Editor = ({schemas}) => {
     const [activeSchema, setActiveSchema] = React.useState(0);
     const [tabSize, setTabSize] = React.useState(2);
     const [fontSize, setFontSize] = React.useState(13);
+    const [showInfo, setShowInfo] = React.useState(false);
+
+    // default schema state - begin
+    const [showValidity, setShowValidity] = React.useState(false);
+    const [validity, setValidity] = React.useState(createMap());
     const [schema, setSchema] = React.useState(schemas[activeSchema][1]);
     const [data, setData] = React.useState(schemas[activeSchema][2]);
+    // end - default schema state
 
     const changeSplit = React.useCallback(() => {
         // toggle verticalSplit and change selected in localStorage
@@ -235,8 +286,9 @@ const Editor = ({schemas}) => {
     >
         <div style={{display: 'flex', flexGrow: 2, overflow: 'auto', flexDirection: verticalSplit ? 'row' : 'column'}}>
             <div style={{
-                width: verticalSplit ? '45%' : '100%', flexShrink: 0,
-                display: 'flex', minHeight: verticalSplit ? 'auto' : '350px',
+                width: verticalSplit ? '45%' : '100%',
+                height: verticalSplit ? 'auto' : '350px',
+                display: 'flex', flexShrink: 0,
                 order: verticalSplit ? 1 : 3,
                 overflow: 'auto',
             }}>
@@ -246,7 +298,10 @@ const Editor = ({schemas}) => {
                     minWidth: verticalSplit ? 'auto' : 800,
                     flexGrow: 2,
                 }}>
-                    {verticalSplit ? <SchemaChanger schemas={schemas} style={{marginLeft: 4}} activeSchema={activeSchema} changeSchema={changeSchema}/> : null}
+                    {verticalSplit ? <SchemaChanger
+                        setShowInfo={setShowInfo} showInfo={showInfo} hasInfo={!!schemas[activeSchema][3]}
+                        schemas={schemas} style={{marginLeft: 4}}
+                        activeSchema={activeSchema} changeSchema={changeSchema}/> : null}
 
                     <div style={{height: 'auto', flexGrow: 2, display: 'flex', flexDirection: 'column', width: verticalSplit ? 'auto' : '50%', paddingRight: verticalSplit ? 0 : 6}}>
                         <Typography component={'p'} variant={'overline'} style={{marginLeft: 4}}>
@@ -263,12 +318,22 @@ const Editor = ({schemas}) => {
                         />
                     </div>
 
-                    <div style={{height: verticalSplit ? '30%' : 'auto', display: 'flex', flexDirection: 'column', flexShrink: 0, width: verticalSplit ? 'auto' : '50%', paddingLeft: verticalSplit ? 0 : 6}}>
-                        <Typography component={'p'} variant={'overline'} style={{marginLeft: 4}}>
-                            Data:
-                        </Typography>
-                        <SchemaDataDebug tabSize={tabSize} fontSize={fontSize} richIde={richIde} vertical={verticalSplit}/>
-                    </div>
+                    {showInfo && schemas[activeSchema][3] ?
+                        <div style={{height: verticalSplit ? '30%' : 'auto', display: 'flex', flexDirection: 'column', flexShrink: 0, width: verticalSplit ? 'auto' : '50%', paddingLeft: verticalSplit ? 0 : 6}}>
+                            <Typography component={'p'} variant={'overline'} style={{marginLeft: 4}}>
+                                Info:
+                            </Typography>
+
+                            <Box ml={3} style={{overflow: 'auto'}}>
+                                <Markdown source={schemas[activeSchema][3]}/>
+                            </Box>
+                        </div> :
+                        <div style={{height: verticalSplit ? '30%' : 'auto', display: 'flex', flexDirection: 'column', flexShrink: 0, width: verticalSplit ? 'auto' : '50%', paddingLeft: verticalSplit ? 0 : 6}}>
+                            <Typography component={'p'} variant={'overline'} style={{marginLeft: 4}}>
+                                Data:
+                            </Typography>
+                            <SchemaDataDebug tabSize={tabSize} fontSize={fontSize} richIde={richIde} vertical={verticalSplit}/>
+                        </div>}
                 </div>
             </div>
 
@@ -285,6 +350,9 @@ const Editor = ({schemas}) => {
                 toggleRichIde={toggleRichIde}
                 richIde={richIde}
                 schemas={schemas}
+                showInfo={showInfo}
+                setShowInfo={setShowInfo}
+                hasInfo={!!schemas[activeSchema][3]}
             />
 
             <main className="App-main" style={{height: '100%', overflow: 'auto', maxWidth: 'none', margin: verticalSplit ? '0 auto' : 0, order: verticalSplit ? 3 : 1}}>

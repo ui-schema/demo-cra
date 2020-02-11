@@ -5,11 +5,13 @@
     overflow: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .refresh-spin {
-        animation: refresh-spin infinite 1s linear;
-    }
+.refresh-spin {
+    animation: refresh-spin infinite 1s linear;
 }
+
+/*@media (prefers-reduced-motion: no-preference) {
+    // leads to no-spin when FF uses too much RAM
+}*/
 
 #root {
     overflow: auto;

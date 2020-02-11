@@ -12,7 +12,13 @@ import {dataConditional, dataConditionalAllOf, schemaConditional, schemaConditio
 import {dataDependencies, dataDependenciesBooleans, schemaDependencies, schemaDependenciesBooleans} from "../schemas/demoDependencies";
 
 const schemas = [
-    ['Main Demo', schemaMain, dataMain],
+    ['Main Demo', schemaMain, dataMain, `
+# Example with Basic Types
+
+This example illustrates a bigger schema.
+
+Including native-objects, Widgets, native-types.
+`],
     ['Stepper', schemaStepper, dataStepper],
     ['Combination Simple', schemaCombining, dataCombining],
     ['Combination with Conditional', schemaCombiningConditional, dataCombiningConditional],
