@@ -218,6 +218,7 @@ const Editor = () => {
                 they can use the context of the editor for working
             */}
         </SchemaEditor>
+
         <Button
             style={{marginTop: 24}}
             onClick={() => {

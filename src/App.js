@@ -12,6 +12,7 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
+import {PageNotFound} from "./component/PageNotFound";
 
 function PageMain() {
     const [showSettings, setShowSettings] = React.useState(false);
@@ -46,27 +47,6 @@ function PageMain() {
     );
 }
 
-function PageNotFound() {
-    return (
-        <div className="App">
-            <header className="App-header">
-                <Typography component={'h1'} variant={'h6'}>
-                    404 Not Found
-                </Typography>
-            </header>
-            <Container className="App-main" maxWidth={'md'} fixed>
-                <Paper style={{margin: 12, padding: 24}}>
-                    <Nav/>
-                </Paper>
-
-                <Paper style={{margin: 12, padding: 24}}>
-                    <NavProject/>
-                </Paper>
-            </Container>
-        </div>
-    );
-}
-
 const PageLiveEdit = Loadable({
     loader: () => import('./component/PageLiveEdit'),
     loading: () => <div style={{display: 'block', margin: '24px'}}>
@@ -80,7 +60,7 @@ const PageLiveEdit = Loadable({
 function App() {
     return <Router>
         <Switch>
-            <Route path="/live-editor" exact component={PageLiveEdit}/>
+            <Route path="/examples/:schema?" component={PageLiveEdit}/>
             <Route path="/" exact component={PageMain}/>
             <Route path="/" component={PageNotFound}/>
         </Switch>

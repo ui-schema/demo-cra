@@ -30,9 +30,33 @@
     min-height: 60vh;
 }
 
+.hide-sm {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
 @media (min-width: 800px) {
     .App-main {
         min-height: auto;
+    }
+}
+
+@media (min-width: 400px) {
+    .hide-sm {
+        position: static;
+        width: initial;
+        height: initial;
+        padding: initial;
+        margin: initial;
+        overflow: initial;
+        clip: initial;
+        border: initial;
     }
 }
 

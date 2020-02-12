@@ -157,7 +157,6 @@ const schemaMain = createOrderedMap({
         age: {
             type: "string",
             widget: "Select",
-            //default: "adult",
             view: {
                 sizeMd: 3
             },
@@ -165,7 +164,20 @@ const schemaMain = createOrderedMap({
                 'child',
                 'teen',
                 'adult',
-                '50plus',
+                'senior',
+            ],
+        },
+        ages: {
+            type: "array",
+            widget: "SelectMulti",
+            view: {
+                sizeMd: 3
+            },
+            enum: [
+                'child',
+                'teen',
+                'adult',
+                'senior',
             ],
         },
     },
@@ -180,5 +192,75 @@ const dataMain = createOrderedMap({
     headline: 'Some Demo Content Headline',
 });
 
-export {schemaMain, dataMain}
+const schemaUser = createOrderedMap({
+    type: "object",
+    title: "headline",
+    properties: {
+        name: {
+            type: "string",
+            view: {
+                sizeMd: 6,
+            }
+        },
+        surname: {
+            type: "string",
+            view: {
+                sizeMd: 6
+            }
+        },
+        address: {
+            type: "object",
+            properties: {
+                street: {
+                    type: "string",
+                    view: {
+                        sizeMd: 9
+                    }
+                },
+                street_no: {
+                    type: "string",
+                    view: {
+                        sizeMd: 3
+                    }
+                },
+                city: {
+                    type: "string",
+                    view: {
+                        sizeMd: 12
+                    }
+                },
+                country: {
+                    type: "string",
+                    view: {
+                        sizeMd: 12
+                    }
+                },
+            }
+        },
+        birthday: {
+            type: "string",
+            format: "date",
+            view: {
+                sizeMd: 6
+            }
+        },
+        seats: {
+            type: "number",
+            view: {
+                sizeMd: 6
+            },
+            default: 1,
+            minimum: 0,
+            maximum: 5,
+        },
+    },
+    required: ['seats']
+});
+
+const dataUser = createOrderedMap({});
+
+export {
+    schemaMain, dataMain,
+    schemaUser, dataUser
+}
 

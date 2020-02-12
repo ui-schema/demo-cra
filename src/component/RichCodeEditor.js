@@ -1,5 +1,6 @@
 import React from 'react';
 import AceEditor from "react-ace";
+import ace from 'ace-builds/src-noconflict/ace';
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/ext-error_marker";
 import "ace-builds/src-noconflict/ext-static_highlight";
@@ -7,14 +8,13 @@ import "ace-builds/src-noconflict/ext-language_tools";
 import "ace-builds/src-noconflict/ext-searchbox";
 import "ace-builds/src-noconflict/ext-statusbar";
 import "ace-builds/src-noconflict/theme-cobalt";
-import ace from 'ace-builds/src-noconflict/ace';
 
 ace.config.set("basePath", "https://cdn.jsdelivr.net/npm/ace-builds@1.4.8/src-noconflict/");
 ace.config.setModuleUrl('ace/mode/javascript_worker', "https://cdn.jsdelivr.net/npm/ace-builds@1.4.8/src-noconflict/worker-javascript.js");
 
 const RichCodeEditor = ({
-                            value, onChange, name, readOnly, vertical,
-                            tabSize = 2, fontSize = 13, theme = 'cobalt', mode = 'json', raw = false,
+                            value, onChange, name, readOnly,
+                            tabSize = 2, fontSize = 13, theme = 'cobalt', mode = 'json', raw = false, renderChange = 0,
                         }) => {
     const [editor, setEditor] = React.useState({});
 
@@ -23,7 +23,7 @@ const RichCodeEditor = ({
             editor.resize();
             editor.renderer.updateFull();
         }
-    }, [editor, vertical]);
+    }, [editor, renderChange]);
 
     if(raw) {
         return <textarea

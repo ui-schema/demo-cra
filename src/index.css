@@ -8,8 +8,9 @@ body {
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    background: #ddecec;
+    padding: 2px 2px
 }
 
 input[type="number"].no-spin::-webkit-outer-spin-button,
