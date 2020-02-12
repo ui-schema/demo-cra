@@ -1,5 +1,4 @@
 import {Container, Paper, Typography} from "@material-ui/core";
-import Nav from "./Nav";
 import NavProject from "./NavProject";
 import React from "react";
 
@@ -12,10 +11,6 @@ function PageNotFound() {
                 </Typography>
             </header>
             <Container className="App-main" maxWidth={'md'} fixed>
-                <Paper style={{margin: 12, padding: 24}}>
-                    <Nav/>
-                </Paper>
-
                 <Paper style={{margin: 12, padding: 24}}>
                     <NavProject/>
                 </Paper>

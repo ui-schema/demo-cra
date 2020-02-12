@@ -19,6 +19,10 @@ export default () => <React.Fragment>
     </Typography>
     <hr style={{opacity: 0.2}}/>
     <Typography component={'p'} variant={'body1'}>
+        <span role={'img'} aria-label={'Examples'}>📖</span> <Link href={'https://ui-schema.bemit.codes/examples'}>Live-Editor + Examples</Link>
+    </Typography>
+    <hr style={{opacity: 0.1, margin: '4px 0 4px 26px'}}/>
+    <Typography component={'p'} variant={'body1'}>
         <span role={'img'} aria-label={'Documentation'}>📖</span> <Link href={'https://github.com/ui-schema/ui-schema/blob/master/README.md'}>Documentation, Current Status</Link>
     </Typography>
     <hr style={{opacity: 0.1, margin: '4px 0 4px 26px'}}/>
