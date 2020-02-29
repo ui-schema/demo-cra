@@ -1,5 +1,5 @@
 import React from 'react';
-import {SchemaEditor, createMap, createOrderedMap} from "@ui-schema/ui-schema";
+import {SchemaEditor, createOrderedMap, createStore} from "@ui-schema/ui-schema";
 import {widgets} from "@ui-schema/ds-material";
 import {Link, Typography} from "@material-ui/core";
 
@@ -57,41 +57,36 @@ const schema1 = {
 };
 
 const UserSettings = () => {
-    const [validity, setValidity] = React.useState(createMap());
-    const [data, setData] = React.useState(() => {
-        let data1 = false;
+    const [store, setStore] = React.useState(() => {
+        let data = false;
         try {
-            data1 = JSON.parse(window.localStorage.getItem('user_settings'));
+            data = JSON.parse(window.localStorage.getItem('user_settings'));
         } catch(e) {
             // not existing user_settings
         }
-        return createOrderedMap(data1 || {})
+        return createStore(createOrderedMap(typeof data === 'object' ? data : {}))
     });
     const [schema,/* setSchema */] = React.useState(createOrderedMap(schema1));
 
     const onChange = React.useCallback((handler) => {
-        const newData = handler(data);
+        setStore(store => {
+            const newStore = handler(store);
 
-        // if using a big schema this can be performance problematic!
-        // if using strings, throttle the `toJS` operation!
-        window.localStorage.setItem('user_settings', JSON.stringify(newData.toJS()));
-        setData(newData);
+            // if using a big schema this can be performance problematic!
+            // if using strings, throttle the `toJS` operation!
+            window.localStorage.setItem('user_settings', JSON.stringify(newStore.getValues().toJS()));
 
-        return newData;
-    }, [data, setData]);
-
-    // todo: with dep `data` the callback would be re-created every time
-    //       leading to everything re-renders, that's performance problematic
+            return newStore;
+        });
+    }, [setStore]);
 
     return <React.Fragment>
         <SchemaEditor
             schema={schema}
-            store={data}
+            store={store}
             onChange={onChange}
             widgets={widgets}
-            validity={validity}
             showValidity={true}
-            onValidity={setValidity}
         >
             {/*
                 add children that should be under the schema editor,

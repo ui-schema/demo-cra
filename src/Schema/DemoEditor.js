@@ -1,8 +1,16 @@
 import React from 'react';
 import {Button, Link, Typography} from "@material-ui/core";
 import {Refresh} from "@material-ui/icons";
-import {SchemaEditor, isInvalid, createMap, createOrderedMap} from "@ui-schema/ui-schema";
+import {SchemaEditor, isInvalid, createOrderedMap, createStore} from "@ui-schema/ui-schema";
 import {widgets} from "@ui-schema/ds-material";
+import {RichText, RichTextInline} from "@ui-schema/material-richtext";
+
+const customWidgets = {...widgets};
+customWidgets.custom = {
+    ...widgets.custom,
+    RichText: RichText,
+    RichTextInline: RichTextInline,
+};
 
 const schema1 = {
     type: "object",
@@ -39,7 +47,7 @@ const schema1 = {
                     widget: "Step",
                     properties: {
                         topics: {
-                            type: "string",
+                            type: "array",
                             widget: "SelectMulti",
                             view: {
                                 sizeMd: 3
@@ -128,6 +136,13 @@ const schema1 = {
                 'center_item_content'
             ]
         },
+        rich_text: {
+            type: "string",
+            widget: "RichText",
+            view: {
+                sizeMd: 12,
+            }
+        },
         layouts: {
             type: "array",
             widget: "OptionsCheck",
@@ -186,19 +201,18 @@ const data1 = {
 
 const Editor = () => {
     const [showValidity, setShowValidity] = React.useState(false);
-    const [validity, setValidity] = React.useState(createMap());
-    const [data, setData] = React.useState(undefined);
+    const [store, setStore] = React.useState(undefined);
     const [schema, setSchema] = React.useState(undefined);
 
     React.useEffect(() => {
         // simulating getting `schema` and `data` from an API
         setTimeout(() => {
-            setData(createOrderedMap(data1));
+            setStore(createStore(createOrderedMap(data1)));
             setSchema(createOrderedMap(schema1));
         }, 1200);
-    }, [setData, setSchema]);
+    }, [setStore, setSchema]);
 
-    if(!data || !schema) return <div style={{textAlign: 'center', margin: '75px 0'}}>
+    if(!store || !schema) return <div style={{textAlign: 'center', margin: '75px 0'}}>
         <Refresh className={'refresh-spin'} fontSize={'large'}/>
         <p>Loading Schema & Data</p>
     </div>;
@@ -206,25 +220,23 @@ const Editor = () => {
     return <React.Fragment>
         <SchemaEditor
             schema={schema}
-            store={data}
-            onChange={setData}
-            widgets={widgets}
-            validity={validity}
+            store={store}
+            onChange={setStore}
+            widgets={customWidgets}
             showValidity={showValidity}
-            onValidity={setValidity}
         >
             {/*
                 add children that should be under the schema editor,
-                they can use the context of the editor for working
+                they can use the context of the editor
             */}
         </SchemaEditor>
 
         <Button
             style={{marginTop: 24}}
             onClick={() => {
-                console.log('data-store: ', data.toJS());
-                console.log('is-invalid: ', !!isInvalid(validity));
-                isInvalid(validity) ?
+                console.log('data-store: ', store.toJS());
+                console.log('is-invalid: ', !!isInvalid(store.getValidity()));
+                isInvalid(store.getValidity()) ?
                     setShowValidity(true) :
                     console.log('should do some action here')
             }}
