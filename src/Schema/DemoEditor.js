@@ -4,6 +4,7 @@ import {Refresh} from "@material-ui/icons";
 import {SchemaEditor, isInvalid, createOrderedMap, createStore} from "@ui-schema/ui-schema";
 import {widgets} from "@ui-schema/ds-material";
 import {RichText, RichTextInline} from "@ui-schema/material-richtext";
+import {browserT} from "../t";
 
 const customWidgets = {...widgets};
 customWidgets.custom = {
@@ -224,6 +225,7 @@ const Editor = () => {
             onChange={setStore}
             widgets={customWidgets}
             showValidity={showValidity}
+            t={browserT}
         >
             {/*
                 add children that should be under the schema editor,
@@ -234,7 +236,7 @@ const Editor = () => {
         <Button
             style={{marginTop: 24}}
             onClick={() => {
-                console.log('data-store: ', store.toJS());
+                console.log('data-store: ', store.getValues() ? store.getValues().toJS() : undefined);
                 console.log('is-invalid: ', !!isInvalid(store.getValidity()));
                 isInvalid(store.getValidity()) ?
                     setShowValidity(true) :

@@ -2,6 +2,7 @@ import React from 'react';
 import {SchemaEditor, createOrderedMap, createStore} from "@ui-schema/ui-schema";
 import {widgets} from "@ui-schema/ds-material";
 import {Link, Typography} from "@material-ui/core";
+import {browserT} from "../t";
 
 const schema1 = {
     type: "object",
@@ -87,6 +88,7 @@ const UserSettings = () => {
             onChange={onChange}
             widgets={widgets}
             showValidity={true}
+            t={browserT}
         >
             {/*
                 add children that should be under the schema editor,
