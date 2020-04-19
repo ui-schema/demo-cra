@@ -202,15 +202,15 @@ const data1 = {
 
 const Editor = () => {
     const [showValidity, setShowValidity] = React.useState(false);
-    const [store, setStore] = React.useState(undefined);
-    const [schema, setSchema] = React.useState(undefined);
+    const [store, setStore] = React.useState(() => createStore(createOrderedMap(data1)));
+    const [schema, setSchema] = React.useState(() => createOrderedMap(schema1));
 
     React.useEffect(() => {
         // simulating getting `schema` and `data` from an API
-        setTimeout(() => {
+        /*setTimeout(() => {
             setStore(createStore(createOrderedMap(data1)));
             setSchema(createOrderedMap(schema1));
-        }, 1200);
+        }, 1200);*/
     }, [setStore, setSchema]);
 
     if(!store || !schema) return <div style={{textAlign: 'center', margin: '75px 0'}}>
