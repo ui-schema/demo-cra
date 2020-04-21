@@ -1,8 +1,10 @@
 import React from 'react';
-import {SchemaEditor, createOrderedMap, createStore} from "@ui-schema/ui-schema";
+import {SchemaEditor,} from "@ui-schema/ui-schema";
+import {createOrderedMap} from "@ui-schema/ui-schema/Utils/createMap";
 import {widgets} from "@ui-schema/ds-material";
 import {Link, Typography} from "@material-ui/core";
 import {browserT} from "../t";
+import {createStore} from "@ui-schema/ui-schema/EditorStore";
 
 const schema1 = {
     type: "object",
