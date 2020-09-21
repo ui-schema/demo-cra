@@ -59,8 +59,8 @@ const dicDE = createMap({
     icons,
 });
 
-const tEN = t(dicEN);
-const tDE = t(dicDE);
+const tEN = t(dicEN, 'en');
+const tDE = t(dicDE, 'de');
 
 const browserT = (text, context) => {
     const locale = window.localStorage.getItem('locale') || navigator.language;

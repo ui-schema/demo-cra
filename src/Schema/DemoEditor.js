@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Link, Typography} from "@material-ui/core";
 import {Refresh} from "@material-ui/icons";
-import {SchemaEditor, isInvalid, createOrderedMap, createStore} from "@ui-schema/ui-schema";
+import {UIGenerator, isInvalid, createOrderedMap, createStore} from "@ui-schema/ui-schema";
 import {widgets} from "@ui-schema/ds-material";
 import {RichText, RichTextInline} from "@ui-schema/material-richtext";
 import {browserT} from "../t";
@@ -219,7 +219,7 @@ const Editor = () => {
     </div>;
 
     return <React.Fragment>
-        <SchemaEditor
+        <UIGenerator
             schema={schema}
             store={store}
             onChange={setStore}
@@ -231,7 +231,7 @@ const Editor = () => {
                 add children that should be under the schema editor,
                 they can use the context of the editor
             */}
-        </SchemaEditor>
+        </UIGenerator>
 
         <Button
             style={{marginTop: 24}}

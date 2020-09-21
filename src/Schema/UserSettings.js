@@ -1,10 +1,10 @@
 import React from 'react';
-import {SchemaEditor,} from "@ui-schema/ui-schema";
-import {createOrderedMap} from "@ui-schema/ui-schema/Utils/createMap";
-import {widgets} from "@ui-schema/ds-material";
 import {Link, Typography} from "@material-ui/core";
+import {widgets} from "@ui-schema/ds-material";
+import {UIGenerator} from "@ui-schema/ui-schema/UIGenerator";
+import {createOrderedMap} from "@ui-schema/ui-schema/Utils/createMap";
+import {createStore} from "@ui-schema/ui-schema/UIStore";
 import {browserT} from "../t";
-import {createStore} from "@ui-schema/ui-schema/EditorStore";
 
 const schema1 = {
     type: "object",
@@ -84,7 +84,7 @@ const UserSettings = () => {
     }, [setStore]);
 
     return <React.Fragment>
-        <SchemaEditor
+        <UIGenerator
             schema={schema}
             store={store}
             onChange={onChange}
@@ -96,7 +96,7 @@ const UserSettings = () => {
                 add children that should be under the schema editor,
                 they can use the context of the editor for working
             */}
-        </SchemaEditor>
+        </UIGenerator>
 
         <Typography component={'p'} variant={'body1'} style={{marginTop: 24, marginBottom: 24}}>
             This form saves the values onChange in the browsers <code>localStorage</code> and restores it at component mount, code in <Link href={'https://github.com/ui-schema/demo-cra/blob/master/src/Schema/UserSettings.js'}>src/Schema/UserSettings.js</Link>
