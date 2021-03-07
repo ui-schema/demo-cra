@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Link, Typography} from "@material-ui/core";
 import {Refresh} from "@material-ui/icons";
-import {UIGenerator, isInvalid, createOrderedMap, createStore} from "@ui-schema/ui-schema";
+import {UIGenerator, isInvalid, createOrderedMap, createStore, storeUpdater} from '@ui-schema/ui-schema'
 import {widgets} from "@ui-schema/ds-material";
 import {RichText, RichTextInline} from "@ui-schema/material-richtext";
 import {browserT} from "../t";
@@ -213,6 +213,10 @@ const Editor = () => {
         }, 1200);*/
     }, [setStore, setSchema]);
 
+    const onChange = React.useCallback((storeKeys, scopes, updater, deleteOnEmpty, type) => {
+        setStore(storeUpdater(storeKeys, scopes, updater, deleteOnEmpty, type))
+    }, [setStore])
+
     if(!store || !schema) return <div style={{textAlign: 'center', margin: '75px 0'}}>
         <Refresh className={'refresh-spin'} fontSize={'large'}/>
         <p>Loading Schema & Data</p>
@@ -222,7 +226,7 @@ const Editor = () => {
         <UIGenerator
             schema={schema}
             store={store}
-            onChange={setStore}
+            onChange={onChange}
             widgets={customWidgets}
             showValidity={showValidity}
             t={browserT}
