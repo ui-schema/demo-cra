@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Link, Typography} from "@material-ui/core";
 import {Refresh} from "@material-ui/icons";
 import {UIGenerator, isInvalid, createOrderedMap, createStore, storeUpdater} from '@ui-schema/ui-schema'
-import {widgets} from "@ui-schema/ds-material";
+import {Step, Stepper, widgets} from '@ui-schema/ds-material'
 import {RichText, RichTextInline} from "@ui-schema/material-richtext";
 import {browserT} from "../t";
 
@@ -11,6 +11,8 @@ customWidgets.custom = {
     ...widgets.custom,
     RichText: RichText,
     RichTextInline: RichTextInline,
+    Stepper: Stepper,
+    Step: Step,
 };
 
 const schema1 = {

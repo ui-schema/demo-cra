@@ -9,8 +9,7 @@ export default () => <React.Fragment>
     </Typography>
     <hr style={{opacity: 0.1, margin: '4px 0 4px 26px'}}/>
     <Typography component={'p'} variant={'body1'}>
-        <span role={'img'} aria-label={'Quick Evaluate Repl.it'}>🚀</span>{' '}
-        <Link href={'https://repl.it/@elbakerino/ui-schema-cra'}>Repl.it Run</Link>&nbsp;|&nbsp;
+        <span role={'img'} aria-label={'Clone on Repl.it'}>🚀</span>{' '}
         <Link href={'https://repl.it/github/ui-schema/demo-cra'}>Repl.it Clone</Link>
     </Typography>
     <hr style={{opacity: 0.1, margin: '4px 0 4px 26px'}}/>
