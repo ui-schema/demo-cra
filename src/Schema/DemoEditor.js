@@ -1,7 +1,11 @@
 import React from 'react';
 import {Button, Link, Typography} from "@material-ui/core";
 import {Refresh} from "@material-ui/icons";
-import {UIGenerator, isInvalid, createOrderedMap, createStore, storeUpdater} from '@ui-schema/ui-schema'
+import {
+    UIStoreProvider, UIMetaProvider, UIRootRenderer,
+    isInvalid, createOrderedMap, createStore,
+    storeUpdater
+} from '@ui-schema/ui-schema'
 import {Step, Stepper, widgets} from '@ui-schema/ds-material'
 import {RichText, RichTextInline} from "@ui-schema/material-richtext";
 import {browserT} from "../t";
@@ -215,8 +219,8 @@ const Editor = () => {
         }, 1200);*/
     }, [setStore, setSchema]);
 
-    const onChange = React.useCallback((storeKeys, scopes, updater, deleteOnEmpty, type) => {
-        setStore(storeUpdater(storeKeys, scopes, updater, deleteOnEmpty, type))
+    const onChange = React.useCallback((storeKeys, scopes, action) => {
+        setStore(storeUpdater(storeKeys, scopes, action))
     }, [setStore])
 
     if(!store || !schema) return <div style={{textAlign: 'center', margin: '75px 0'}}>
@@ -225,19 +229,17 @@ const Editor = () => {
     </div>;
 
     return <React.Fragment>
-        <UIGenerator
-            schema={schema}
+        <UIStoreProvider
             store={store}
             onChange={onChange}
-            widgets={customWidgets}
             showValidity={showValidity}
-            t={browserT}
         >
+            <UIRootRenderer schema={schema}/>
             {/*
                 add children that should be under the schema editor,
-                they can use the context of the editor
+                they can use the UIStoreContext and UIConfigContext
             */}
-        </UIGenerator>
+        </UIStoreProvider>
 
         <Button
             style={{marginTop: 24}}
@@ -261,4 +263,10 @@ const Editor = () => {
     </React.Fragment>;
 };
 
-export default Editor;
+const AppEditor = () => {
+    return <UIMetaProvider widgets={customWidgets} t={browserT}>
+        <Editor/>
+    </UIMetaProvider>
+}
+
+export default AppEditor

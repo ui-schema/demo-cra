@@ -71,9 +71,9 @@ const UserSettings = () => {
     });
     const [schema,/* setSchema */] = React.useState(createOrderedMap(schema1));
 
-    const onChange = React.useCallback((storeKeys, scopes, updater, deleteOnEmpty, type) => {
+    const onChange = React.useCallback((storeKeys, scopes, action) => {
         setStore(prevStore => {
-            const newStore = storeUpdater(storeKeys, scopes, updater, deleteOnEmpty, type)(prevStore)
+            const newStore = storeUpdater(storeKeys, scopes, action)(prevStore)
 
             // if using a big schema this can be performance problematic!
             // if using strings, throttle the `toJS` operation!
