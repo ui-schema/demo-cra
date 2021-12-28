@@ -59,12 +59,14 @@ const schema1 = {
                             view: {
                                 sizeMd: 3
                             },
-                            enum: [
-                                'theater',
-                                'crime',
-                                'sci-fi',
-                                'horror',
-                            ],
+                            items: {
+                                oneOf: [
+                                    {const: 'theater'},
+                                    {const: 'crime'},
+                                    {const: 'sci-fi'},
+                                    {const: 'horror'},
+                                ],
+                            },
                         },
                     }
                 },
@@ -156,13 +158,29 @@ const schema1 = {
             view: {
                 sizeMd: 3
             },
-            enum: [
-                'sidebar_left',
-                'sidebar_right',
-                'notice',
-                'content',
-                'footer',
-            ],
+            items: {
+                oneOf: [
+                    {
+                        const: 'sidebar_left',
+                        t: {
+                            de: {
+                                title: 'Linke Sidebar',
+                            },
+                            en: {
+                                title: 'Left Sidebar',
+                            },
+                        },
+                    }, {
+                        const: 'sidebar_right',
+                    }, {
+                        const: 'notice',
+                    }, {
+                        const: 'content',
+                    }, {
+                        const: 'footer',
+                    },
+                ],
+            },
             default: [
                 'sidebar_left'
             ],
@@ -219,8 +237,8 @@ const Editor = () => {
         }, 1200);*/
     }, [setStore, setSchema]);
 
-    const onChange = React.useCallback((storeKeys, scopes, action) => {
-        setStore(storeUpdater(storeKeys, scopes, action))
+    const onChange = React.useCallback((actions) => {
+        setStore(storeUpdater(actions))
     }, [setStore])
 
     if(!store || !schema) return <div style={{textAlign: 'center', margin: '75px 0'}}>

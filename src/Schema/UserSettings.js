@@ -3,7 +3,8 @@ import {Link, Typography} from "@material-ui/core";
 import {widgets} from "@ui-schema/ds-material";
 import {UIGenerator} from "@ui-schema/ui-schema/UIGenerator";
 import {createOrderedMap} from "@ui-schema/ui-schema/Utils/createMap";
-import {createStore, storeUpdater} from '@ui-schema/ui-schema/UIStore'
+import {createStore} from '@ui-schema/ui-schema/UIStore'
+import {storeUpdater} from '@ui-schema/ui-schema/storeUpdater'
 import {browserT} from "../t";
 
 const schema1 = {
@@ -71,9 +72,9 @@ const UserSettings = () => {
     });
     const [schema,/* setSchema */] = React.useState(createOrderedMap(schema1));
 
-    const onChange = React.useCallback((storeKeys, scopes, action) => {
+    const onChange = React.useCallback((actions) => {
         setStore(prevStore => {
-            const newStore = storeUpdater(storeKeys, scopes, action)(prevStore)
+            const newStore = storeUpdater(actions)(prevStore)
 
             // if using a big schema this can be performance problematic!
             // if using strings, throttle the `toJS` operation!
