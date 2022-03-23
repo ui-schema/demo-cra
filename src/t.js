@@ -10,7 +10,7 @@ const icons = {
 
 const dicEN = createMap({
     error: en.errors,
-    labels: {...en.labels, ...en.richText, ...en.dnd},
+    labels: {...en.labels, ...en.dnd},
     widget: {
         stepper: {
             "step-1": {
@@ -24,7 +24,7 @@ const dicEN = createMap({
 
 const dicDE = createMap({
     error: de.errors,
-    labels: {...de.labels, ...de.richText, ...de.dnd},
+    labels: {...de.labels, ...de.dnd},
     widget: {
         stepper: {
             "step-1": {

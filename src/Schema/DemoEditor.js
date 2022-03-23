@@ -1,63 +1,60 @@
-import React from 'react';
-import {Button, Link, Typography} from "@material-ui/core";
-import {Refresh} from "@material-ui/icons";
+import React from 'react'
+import {Button, Link, Typography} from '@material-ui/core'
+import {Refresh} from '@material-ui/icons'
 import {
     UIStoreProvider, UIMetaProvider, UIRootRenderer,
     isInvalid, createOrderedMap, createStore,
-    storeUpdater
+    storeUpdater,
 } from '@ui-schema/ui-schema'
 import {Step, Stepper, widgets} from '@ui-schema/ds-material'
-import {RichText, RichTextInline} from "@ui-schema/material-richtext";
-import {browserT} from "../t";
+import {browserT} from '../t'
 
-const customWidgets = {...widgets};
+const customWidgets = {...widgets}
 customWidgets.custom = {
     ...widgets.custom,
-    RichText: RichText,
-    RichTextInline: RichTextInline,
     Stepper: Stepper,
     Step: Step,
-};
+}
 
 const schema1 = {
-    type: "object",
-    title: "headline",
+    type: 'object',
+    title: 'headline',
     properties: {
         stepper: {
-            type: "object",
-            widget: "Stepper",
+            type: 'object',
+            widget: 'Stepper',
             properties: {
                 'step-1': {
-                    type: "object",
+                    type: 'object',
                     properties: {
                         name: {
-                            type: "string",
+                            type: 'string',
                             minLength: 2,
                             maxLength: 3,
                             view: {
                                 sizeMd: 6,
-                            }
+                            },
                         },
                         surname: {
-                            type: "string",
+                            type: 'string',
                             view: {
-                                sizeMd: 6
-                            }
+                                sizeMd: 6,
+                            },
                         },
                     },
                     required: [
-                        'surname'
-                    ]
+                        'surname',
+                    ],
                 },
                 'step-2': {
-                    type: "object",
-                    widget: "Step",
+                    type: 'object',
+                    widget: 'Step',
                     properties: {
                         topics: {
-                            type: "array",
-                            widget: "SelectMulti",
+                            type: 'array',
+                            widget: 'SelectMulti',
                             view: {
-                                sizeMd: 3
+                                sizeMd: 3,
                             },
                             items: {
                                 oneOf: [
@@ -68,95 +65,96 @@ const schema1 = {
                                 ],
                             },
                         },
-                    }
+                    },
                 },
                 'step-3': {
-                    type: "object",
-                    widget: "Step",
+                    type: 'object',
+                    widget: 'Step',
                     properties: {
                         accepted: {
-                            type: "boolean",
+                            type: 'boolean',
                         },
-                    }
+                    },
                 },
-            }
+            },
         },
         headline: {
-            type: "string",
+            type: 'string',
             view: {
                 sizeXs: 6,
                 sizeSm: 6,
                 sizeMd: 6,
                 sizeLg: 6,
                 sizeLx: 6,
-            }
+            },
         },
         qty: {
-            type: "number",
+            type: 'number',
             minimum: 2,
             maximum: 15,
             view: {
-                sizeMd: 3
-            }
+                sizeMd: 3,
+            },
         },
         length: {
-            type: "number",
+            type: 'number',
             multipleOf: 2,
             view: {
-                sizeMd: 3
-            }
+                sizeMd: 3,
+            },
         },
         text: {
-            type: "string",
-            widget: "Text",
+            type: 'string',
+            widget: 'Text',
             view: {
                 sizeMd: 6,
-            }
+            },
         },
         usaPhone: {
-            type: "string",
+            type: 'string',
             // only valid for: (888)555-1212 or 555-1212
-            pattern: "^(\\([0-9]{3}\\))?[0-9]{3}-[0-9]{4}$",
+            pattern: '^(\\([0-9]{3}\\))?[0-9]{3}-[0-9]{4}$',
             view: {
-                sizeMd: 3
-            }
+                sizeMd: 3,
+            },
         },
         style: {
-            type: "object",
+            type: 'object',
             view: {
-                sizeMd: 3
+                sizeMd: 3,
             },
             properties: {
                 center_items: {
-                    type: "boolean",
+                    type: 'boolean',
                     default: true,
                     view: {
-                        sizeMd: 12
-                    }
+                        sizeMd: 12,
+                    },
                 },
                 center_item_content: {
-                    type: "boolean",
+                    type: 'boolean',
                     view: {
-                        sizeMd: 12
-                    }
-                }
+                        sizeMd: 12,
+                    },
+                },
             },
             required: [
-                'center_item_content'
-            ]
+                'center_item_content',
+            ],
         },
-        rich_text: {
+        // todo: `@ui-schema/material-richtext` was removed before 0.3.0-beta - as DraftJS is abandoned and is not compatible with immutable v4
+        /*rich_text: {
             type: "string",
             widget: "RichText",
             view: {
                 sizeMd: 12,
             }
-        },
+        },*/
         layouts: {
-            type: "array",
-            widget: "OptionsCheck",
+            type: 'array',
+            widget: 'OptionsCheck',
             view: {
-                sizeMd: 3
+                sizeMd: 3,
             },
             items: {
                 oneOf: [
@@ -182,15 +180,15 @@ const schema1 = {
                 ],
             },
             default: [
-                'sidebar_left'
+                'sidebar_left',
             ],
         },
         sizeDef: {
-            type: "string",
-            widget: "OptionsRadio",
-            default: "middle",
+            type: 'string',
+            widget: 'OptionsRadio',
+            default: 'middle',
             view: {
-                sizeMd: 3
+                sizeMd: 3,
             },
             enum: [
                 'small',
@@ -199,11 +197,11 @@ const schema1 = {
             ],
         },
         age: {
-            type: "string",
-            widget: "Select",
+            type: 'string',
+            widget: 'Select',
             //default: "adult",
             view: {
-                sizeMd: 3
+                sizeMd: 3,
             },
             enum: [
                 'child',
@@ -215,19 +213,19 @@ const schema1 = {
     },
     required: [
         'layouts',
-        'size'
-    ]
-};
+        'size',
+    ],
+}
 
 const data1 = {
     stepper: {'step-1': {name: 'Max'}},
     headline: 'Some Demo Content Headline',
-};
+}
 
 const Editor = () => {
-    const [showValidity, setShowValidity] = React.useState(false);
-    const [store, setStore] = React.useState(() => createStore(createOrderedMap(data1)));
-    const [schema, setSchema] = React.useState(() => createOrderedMap(schema1));
+    const [showValidity, setShowValidity] = React.useState(false)
+    const [store, setStore] = React.useState(() => createStore(createOrderedMap(data1)))
+    const [schema, setSchema] = React.useState(() => createOrderedMap(schema1))
 
     React.useEffect(() => {
         // simulating getting `schema` and `data` from an API
@@ -235,7 +233,7 @@ const Editor = () => {
             setStore(createStore(createOrderedMap(data1)));
             setSchema(createOrderedMap(schema1));
         }, 1200);*/
-    }, [setStore, setSchema]);
+    }, [setStore, setSchema])
 
     const onChange = React.useCallback((actions) => {
         setStore(storeUpdater(actions))
@@ -244,7 +242,7 @@ const Editor = () => {
     if(!store || !schema) return <div style={{textAlign: 'center', margin: '75px 0'}}>
         <Refresh className={'refresh-spin'} fontSize={'large'}/>
         <p>Loading Schema & Data</p>
-    </div>;
+    </div>
 
     return <React.Fragment>
         <UIStoreProvider
@@ -262,8 +260,8 @@ const Editor = () => {
         <Button
             style={{marginTop: 24}}
             onClick={() => {
-                console.log('data-store: ', store.getValues() ? store.getValues().toJS() : undefined);
-                console.log('is-invalid: ', !!isInvalid(store.getValidity()));
+                console.log('data-store: ', store.getValues() ? store.getValues().toJS() : undefined)
+                console.log('is-invalid: ', !!isInvalid(store.getValidity()))
                 isInvalid(store.getValidity()) ?
                     setShowValidity(true) :
                     console.log('should do some action here')
@@ -278,8 +276,8 @@ const Editor = () => {
         <Typography component={'p'} variant={'body1'}>
             Code of this form/schema: <Link href={'https://github.com/ui-schema/demo-cra/blob/master/src/Schema/DemoEditor.js'}>src/Schema/DemoEditor.js</Link>
         </Typography>
-    </React.Fragment>;
-};
+    </React.Fragment>
+}
 
 const AppEditor = () => {
     return <UIMetaProvider widgets={customWidgets} t={browserT}>
