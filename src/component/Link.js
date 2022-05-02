@@ -2,12 +2,12 @@ import React from 'react';
 import {
     Link as RouterLink
 } from "react-router-dom";
-import MuiLink from '@material-ui/core/Link';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIc from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import {makeStyles} from "@material-ui/core";
+import MuiLink from '@mui/material/Link';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIc from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import {makeStyles} from "@mui/material";
 
 const useListItemStyles = makeStyles(theme => ({
     root: {

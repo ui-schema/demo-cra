@@ -1,15 +1,21 @@
 import React from 'react';
 import './App.css';
-import {Typography, Button, Paper, Container} from "@material-ui/core";
-import DemoEditor from "./Schema/DemoEditor";
-import UserSettings from "./Schema/UserSettings";
-import NavProject from "./component/NavProject";
+import CssBaseline from '@mui/material/CssBaseline';
+import {StyledEngineProvider, ThemeProvider} from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+import DemoEditor from './Schema/DemoEditor';
+import UserSettings from './Schema/UserSettings';
+import NavProject from './component/NavProject';
 import {
     BrowserRouter as Router,
-    Switch,
+    Routes,
     Route,
-} from "react-router-dom";
-import {PageNotFound} from "./component/PageNotFound";
+} from 'react-router-dom';
+import {PageNotFound} from './component/PageNotFound';
+import {themeLight} from './theme';
 
 function PageMain() {
     const [showSettings, setShowSettings] = React.useState(false);
@@ -41,12 +47,17 @@ function PageMain() {
 }
 
 function App() {
-    return <Router>
-        <Switch>
-            <Route path="/" exact component={PageMain}/>
-            <Route path="/" component={PageNotFound}/>
-        </Switch>
-    </Router>
+    return <StyledEngineProvider>
+        <ThemeProvider theme={themeLight}>
+            <CssBaseline/>
+            <Router>
+                <Routes>
+                    <Route path="/" exact element={<PageMain/>}/>
+                    <Route path="/" element={<PageNotFound/>}/>
+                </Routes>
+            </Router>
+        </ThemeProvider>
+    </StyledEngineProvider>
 }
 
 export default App;

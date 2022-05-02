@@ -19,7 +19,6 @@
 }
 
 .App-main {
-    background-color: #ffffff;
     display: flex;
     flex-direction: column;
     font-size: 1.25rem;

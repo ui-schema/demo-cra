@@ -1,6 +1,8 @@
 import React from 'react'
-import {Button, Link, Typography} from '@material-ui/core'
-import {Refresh} from '@material-ui/icons'
+import Button from '@mui/material/Button'
+import Link from '@mui/material/Link'
+import Typography from '@mui/material/Typography'
+import IcRefresh from '@mui/icons-material/Refresh'
 import {
     UIStoreProvider, UIMetaProvider, UIRootRenderer,
     isInvalid, createOrderedMap, createStore,
@@ -240,7 +242,7 @@ const Editor = () => {
     }, [setStore])
 
     if(!store || !schema) return <div style={{textAlign: 'center', margin: '75px 0'}}>
-        <Refresh className={'refresh-spin'} fontSize={'large'}/>
+        <IcRefresh className={'refresh-spin'} fontSize={'large'}/>
         <p>Loading Schema & Data</p>
     </div>
 

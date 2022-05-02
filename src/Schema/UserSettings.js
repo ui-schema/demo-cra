@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, Typography} from "@material-ui/core";
+import {Link, Typography} from "@mui/material";
 import {widgets} from "@ui-schema/ds-material";
 import {UIGenerator} from "@ui-schema/ui-schema/UIGenerator";
 import {createOrderedMap} from "@ui-schema/ui-schema/Utils/createMap";
