@@ -4,19 +4,12 @@ import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import IcRefresh from '@mui/icons-material/Refresh'
 import {
-    UIStoreProvider, UIMetaProvider, UIRootRenderer,
+    UIStoreProvider,
     isInvalid, createOrderedMap, createStore,
     storeUpdater,
+    injectPluginStack,
 } from '@ui-schema/ui-schema'
-import {Step, Stepper, widgets} from '@ui-schema/ds-material'
-import {browserT} from '../t'
-
-const customWidgets = {...widgets}
-customWidgets.custom = {
-    ...widgets.custom,
-    Stepper: Stepper,
-    Step: Step,
-}
+import {GridContainer} from '@ui-schema/ds-material/GridContainer'
 
 const schema1 = {
     type: 'object',
@@ -224,7 +217,8 @@ const data1 = {
     headline: 'Some Demo Content Headline',
 }
 
-const Editor = () => {
+const GridStack = injectPluginStack(GridContainer)
+const AppEditor = () => {
     const [showValidity, setShowValidity] = React.useState(false)
     const [store, setStore] = React.useState(() => createStore(createOrderedMap(data1)))
     const [schema, setSchema] = React.useState(() => createOrderedMap(schema1))
@@ -252,7 +246,7 @@ const Editor = () => {
             onChange={onChange}
             showValidity={showValidity}
         >
-            <UIRootRenderer schema={schema}/>
+            <GridStack isRoot schema={schema}/>
             {/*
                 add children that should be under the schema editor,
                 they can use the UIStoreContext and UIConfigContext
@@ -279,12 +273,6 @@ const Editor = () => {
             Code of this form/schema: <Link href={'https://github.com/ui-schema/demo-cra/blob/master/src/Schema/DemoEditor.js'}>src/Schema/DemoEditor.js</Link>
         </Typography>
     </React.Fragment>
-}
-
-const AppEditor = () => {
-    return <UIMetaProvider widgets={customWidgets} t={browserT}>
-        <Editor/>
-    </UIMetaProvider>
 }
 
 export default AppEditor
