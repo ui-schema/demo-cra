@@ -1,6 +1,6 @@
 # UI-Schema Create-React Example w/ Material-UI
 
-[![Travis (.org) branch](https://img.shields.io/travis/ui-schema/demo-cra/master?style=flat-square)](https://travis-ci.org/ui-schema/demo-cra)
+[![Github actions Build](https://github.com/ui-schema/demo-cra/actions/workflows/blank.yml/badge.svg)](https://github.com/ui-schema/demo-cra/actions)
 
 Example project for [@ui-schema/ui-schema](https://github.com/ui-schema/ui-schema) with material ui.
 
