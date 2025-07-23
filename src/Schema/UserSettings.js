@@ -1,11 +1,11 @@
 import React from 'react'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
-import {createOrderedMap} from '@ui-schema/ui-schema/Utils/createMap'
-import {UIStoreProvider, createStore} from '@ui-schema/ui-schema/UIStore'
-import {storeUpdater} from '@ui-schema/ui-schema/storeUpdater'
-import {injectPluginStack} from '@ui-schema/ui-schema';
-import {GridContainer} from '@ui-schema/ds-material/GridContainer';
+import {createOrderedMap} from '@ui-schema/ui-schema/createMap'
+import {WidgetEngine} from '@ui-schema/react/WidgetEngine'
+import {storeUpdater} from '@ui-schema/react/storeUpdater'
+import {UIStoreProvider, createStore} from '@ui-schema/react/UIStore'
+import {GridContainer} from '@ui-schema/ds-material/GridContainer'
 
 const schema1 = {
     type: "object",
@@ -60,7 +60,6 @@ const schema1 = {
     ]
 };
 
-const GridStack = injectPluginStack(GridContainer)
 const UserSettings = () => {
     const [store, setStore] = React.useState(() => {
         let data = false;
@@ -91,7 +90,9 @@ const UserSettings = () => {
             onChange={onChange}
             showValidity
         >
-            <GridStack isRoot schema={schema}/>
+            <GridContainer>
+                <WidgetEngine isRoot schema={schema}/>
+            </GridContainer>
             {/*
                 add children that should be under the schema editor,
                 they can use the UIStoreContext and UIConfigContext

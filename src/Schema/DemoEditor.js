@@ -3,76 +3,17 @@ import Button from '@mui/material/Button'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import IcRefresh from '@mui/icons-material/Refresh'
-import {
-    UIStoreProvider,
-    isInvalid, createOrderedMap, createStore,
-    storeUpdater,
-    injectPluginStack,
-} from '@ui-schema/ui-schema'
+import {createOrderedMap} from '@ui-schema/ui-schema/createMap'
+import {WidgetEngine} from '@ui-schema/react/WidgetEngine'
+import {storeUpdater} from '@ui-schema/react/storeUpdater'
+import {UIStoreProvider, createStore} from '@ui-schema/react/UIStore'
 import {GridContainer} from '@ui-schema/ds-material/GridContainer'
+import {isInvalid} from '@ui-schema/react/isInvalid'
 
 const schema1 = {
     type: 'object',
     title: 'headline',
     properties: {
-        stepper: {
-            type: 'object',
-            widget: 'Stepper',
-            properties: {
-                'step-1': {
-                    type: 'object',
-                    properties: {
-                        name: {
-                            type: 'string',
-                            minLength: 2,
-                            maxLength: 3,
-                            view: {
-                                sizeMd: 6,
-                            },
-                        },
-                        surname: {
-                            type: 'string',
-                            view: {
-                                sizeMd: 6,
-                            },
-                        },
-                    },
-                    required: [
-                        'surname',
-                    ],
-                },
-                'step-2': {
-                    type: 'object',
-                    widget: 'Step',
-                    properties: {
-                        topics: {
-                            type: 'array',
-                            widget: 'SelectMulti',
-                            view: {
-                                sizeMd: 3,
-                            },
-                            items: {
-                                oneOf: [
-                                    {const: 'theater'},
-                                    {const: 'crime'},
-                                    {const: 'sci-fi'},
-                                    {const: 'horror'},
-                                ],
-                            },
-                        },
-                    },
-                },
-                'step-3': {
-                    type: 'object',
-                    widget: 'Step',
-                    properties: {
-                        accepted: {
-                            type: 'boolean',
-                        },
-                    },
-                },
-            },
-        },
         headline: {
             type: 'string',
             view: {
@@ -217,7 +158,6 @@ const data1 = {
     headline: 'Some Demo Content Headline',
 }
 
-const GridStack = injectPluginStack(GridContainer)
 const AppEditor = () => {
     const [showValidity, setShowValidity] = React.useState(false)
     const [store, setStore] = React.useState(() => createStore(createOrderedMap(data1)))
@@ -246,7 +186,9 @@ const AppEditor = () => {
             onChange={onChange}
             showValidity={showValidity}
         >
-            <GridStack isRoot schema={schema}/>
+            <GridContainer>
+                <WidgetEngine isRoot schema={schema}/>
+            </GridContainer>
             {/*
                 add children that should be under the schema editor,
                 they can use the UIStoreContext and UIConfigContext

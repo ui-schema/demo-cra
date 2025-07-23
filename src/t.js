@@ -1,6 +1,7 @@
 import React from "react";
 import AccountBox from "@mui/icons-material/AccountBox";
-import {makeTranslator, createMap} from '@ui-schema/ui-schema';
+import {createMap} from '@ui-schema/ui-schema/createMap';
+import {makeTranslator} from '@ui-schema/ui-schema/Translator';
 import * as en from '@ui-schema/dictionary/en'
 import * as de from '@ui-schema/dictionary/de'
 
@@ -10,7 +11,7 @@ const icons = {
 
 const dicEN = createMap({
     error: en.errors,
-    labels: {...en.labels, ...en.dnd},
+    labels: {...en.labels},
     widget: {
         stepper: {
             "step-1": {
@@ -24,7 +25,7 @@ const dicEN = createMap({
 
 const dicDE = createMap({
     error: de.errors,
-    labels: {...de.labels, ...de.dnd},
+    labels: {...de.labels},
     widget: {
         stepper: {
             "step-1": {

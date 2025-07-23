@@ -16,16 +16,40 @@ import {
 } from 'react-router-dom';
 import {PageNotFound} from './component/PageNotFound';
 import {themeLight} from './theme';
-import {Step, Stepper, widgets} from '@ui-schema/ds-material';
-import {UIMetaProvider} from '@ui-schema/ui-schema/UIMeta'
+import {baseComponents, typeWidgets} from '@ui-schema/ds-material/BindingDefault';
+import {bindingExtended} from '@ui-schema/ds-material/BindingExtended';
+import {UIMetaProvider} from '@ui-schema/react/UIMeta'
 import {browserT} from './t';
+import {DefaultHandler, ValidityReporter} from '@ui-schema/react';
+import {schemaPluginsAdapterBuilder} from '@ui-schema/react/SchemaPluginsAdapter';
+import {requiredPlugin, requiredValidatorLegacy, standardValidators, Validator, validatorPlugin} from '@ui-schema/json-schema';
+import {SchemaGridHandler} from '@ui-schema/ds-material/Grid';
 
-const customWidgets = {...widgets}
-customWidgets.custom = {
-    ...widgets.custom,
-    Stepper: Stepper,
-    Step: Step,
+/**
+ *
+ * @type {import('@ui-schema/ds-material/Binding').MuiBinding}
+ */
+const customBinding = {
+    ...baseComponents,
+    widgetPlugins: [
+        DefaultHandler,
+        schemaPluginsAdapterBuilder([
+            validatorPlugin,
+            requiredPlugin,
+        ]),
+        SchemaGridHandler, // use `import {GridItemPlugin} from '@ui-schema/ds-material/GridItemPlugin'` for MUI v7
+        ValidityReporter,
+    ],
+    widgets: {
+        ...typeWidgets,
+        ...bindingExtended,
+    },
 }
+
+const validator = Validator([
+    ...standardValidators,
+    requiredValidatorLegacy,
+])
 
 function PageMain() {
     const [showSettings, setShowSettings] = React.useState(false);
@@ -60,7 +84,11 @@ function App() {
     return <StyledEngineProvider>
         <ThemeProvider theme={themeLight}>
             <CssBaseline/>
-            <UIMetaProvider widgets={customWidgets} t={browserT}>
+            <UIMetaProvider
+                binding={customBinding}
+                t={browserT}
+                validate={validator.validate}
+            >
                 <Router>
                     <Routes>
                         <Route path="/" exact element={<PageMain/>}/>
