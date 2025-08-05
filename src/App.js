@@ -16,8 +16,9 @@ import {
 } from 'react-router-dom';
 import {PageNotFound} from './component/PageNotFound';
 import {themeLight} from './theme';
-import {baseComponents, typeWidgets} from '@ui-schema/ds-material/BindingDefault';
-import {bindingExtended} from '@ui-schema/ds-material/BindingExtended';
+import {bindingComponents} from '@ui-schema/ds-material/Binding/Components'
+import {widgetsDefault} from '@ui-schema/ds-material/Binding/WidgetsDefault'
+import {widgetsExtended} from '@ui-schema/ds-material/Binding/WidgetsExtended'
 import {UIMetaProvider} from '@ui-schema/react/UIMeta'
 import {browserT} from './t';
 import {DefaultHandler, ValidityReporter} from '@ui-schema/react';
@@ -30,7 +31,7 @@ import {SchemaGridHandler} from '@ui-schema/ds-material/Grid';
  * @type {import('@ui-schema/ds-material/Binding').MuiBinding}
  */
 const customBinding = {
-    ...baseComponents,
+    ...bindingComponents,
     widgetPlugins: [
         DefaultHandler,
         schemaPluginsAdapterBuilder([
@@ -41,8 +42,8 @@ const customBinding = {
         ValidityReporter,
     ],
     widgets: {
-        ...typeWidgets,
-        ...bindingExtended,
+        ...widgetsDefault,
+        ...widgetsExtended,
     },
 }
 
