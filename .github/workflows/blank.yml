@@ -15,20 +15,20 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                node-version: [14.x]
+                node-version: [24.x]
         steps:
-            -   uses: actions/checkout@v2
+            -   uses: actions/checkout@v4
             -   name: Set Branch
                 id: vars
                 run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
             -   name: Use Node.js ${{ matrix.node-version }}
-                uses: actions/setup-node@v1
+                uses: actions/setup-node@v4
                 with:
                     node-version: ${{ matrix.node-version }}
                     registry-url: 'https://registry.npmjs.org'
 
             -   name: Cache CI node_modules
-                uses: actions/cache@v2
+                uses: actions/cache@v4
                 env:
                     cache-name: cache-node-modules
                 with:
@@ -40,10 +40,10 @@ jobs:
                 run: |
                     npm ci
 
-            # (old cra not compatible with esm/modern Node.js)
-            #-   name: Run tests
-            #    run: |
-            #        npm test
+            -   name: Run tests
+                run: |
+                    npx playwright install chromium --with-deps
+                    npm test
 
             -   name: Build
                 run: |

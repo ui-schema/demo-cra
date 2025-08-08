@@ -6,44 +6,45 @@ import {WidgetEngine} from '@ui-schema/react/WidgetEngine'
 import {storeUpdater} from '@ui-schema/react/storeUpdater'
 import {UIStoreProvider, createStore} from '@ui-schema/react/UIStore'
 import {GridContainer} from '@ui-schema/ds-material/GridContainer'
+import {useImmutable} from '@ui-schema/react/Utils/useImmutable';
 
 const schema1 = {
-    type: "object",
-    title: "headline",
+    type: 'object',
+    title: 'headline',
     properties: {
         call_count: {
-            type: "number",
+            type: 'number',
             minimum: 2,
             maximum: 10,
             view: {
-                sizeMd: 3
-            }
+                sizeMd: 3,
+            },
         },
         privacy: {
-            type: "boolean",
+            type: 'boolean',
             default: true,
             view: {
-                sizeMd: 12
-            }
+                sizeMd: 12,
+            },
         },
         spam: {
-            type: "boolean",
+            type: 'boolean',
             view: {
-                sizeMd: 12
-            }
+                sizeMd: 12,
+            },
         },
         accepted: {
-            type: "boolean",
+            type: 'boolean',
             view: {
-                sizeMd: 12
-            }
+                sizeMd: 12,
+            },
         },
         type: {
-            type: "string",
-            widget: "Select",
-            default: "customer",
+            type: 'string',
+            widget: 'Select',
+            default: 'customer',
             view: {
-                sizeMd: 3
+                sizeMd: 3,
             },
             enum: [
                 'customer',
@@ -56,11 +57,11 @@ const schema1 = {
     },
     required: [
         'call_count',
-        'type'
-    ]
+        'type',
+    ],
 };
 
-const UserSettings = () => {
+const LocalStorageForm = () => {
     const [store, setStore] = React.useState(() => {
         let data = false;
         try {
@@ -70,19 +71,23 @@ const UserSettings = () => {
         }
         return createStore(createOrderedMap(typeof data === 'object' ? data : {}))
     });
-    const [schema,/* setSchema */] = React.useState(createOrderedMap(schema1));
+    const [schema/*, setSchema */] = React.useState(createOrderedMap(schema1));
 
     const onChange = React.useCallback((actions) => {
         setStore(prevStore => {
             const newStore = storeUpdater(actions)(prevStore)
-
-            // if using a big schema this can be performance problematic!
-            // if using strings, throttle the `toJS` operation!
-            window.localStorage.setItem('user_settings', JSON.stringify(newStore.getValues().toJS()));
-
             return newStore
         })
     }, [setStore])
+
+    // this hook ensures the `latestValues` stays stable and the effect isn't triggered unnecessarily
+    const latestValues = useImmutable(store.getValues())
+
+    React.useEffect(() => {
+        // if using a big schema this can be performance problematic!
+        // if using strings, throttle the `toJS` operation!
+        window.localStorage.setItem('user_settings', JSON.stringify(latestValues.toJS()));
+    }, [latestValues])
 
     return <React.Fragment>
         <UIStoreProvider
@@ -100,9 +105,9 @@ const UserSettings = () => {
         </UIStoreProvider>
 
         <Typography component={'p'} variant={'body1'} style={{marginTop: 24, marginBottom: 24}}>
-            This form saves the values onChange in the browsers <code>localStorage</code> and restores it at component mount, code in <Link href={'https://github.com/ui-schema/demo-cra/blob/master/src/Schema/UserSettings.js'}>src/Schema/UserSettings.js</Link>
+            This form saves the values onChange in the browsers <code>localStorage</code> and restores it at component mount, code in <Link href={'https://github.com/ui-schema/demo-cra/blob/master/src/components/LocalStorageForm.js'}>src/components/LocalStorageForm.js</Link>
         </Typography>
     </React.Fragment>;
 };
 
-export default UserSettings;
+export default LocalStorageForm;

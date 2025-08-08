@@ -1,20 +1,20 @@
 import React from 'react';
-import GithubLogo from './GithubLogo';
+import GithubLogo from '@mui/icons-material/Github';
 import {Link, Typography} from '@mui/material';
 
 const NavProject = () => <>
     <Typography component={'p'} variant={'body1'}>
-        <span role={'img'} aria-label={'Quick Evaluate CodeSandbox'}>🚀</span>{' '}
-        <Link href={'https://codesandbox.io/s/github/ui-schema/demo-cra/tree/master/?autoresize=1&fontsize=12&hidenavigation=1&module=%2Fsrc%2FSchema%2FDemoEditor.js'}>Run on CodeSandbox</Link>
+        <span role={'img'} aria-label={'rocket'}>🚀</span>{' '}
+        <Link href={'https://codesandbox.io/s/github/ui-schema/demo-cra/tree/master/?autoresize=1&fontsize=12&hidenavigation=1&module=%2Fsrc%2FApp.jsx'}>Run on CodeSandbox</Link>
     </Typography>
     <hr style={{opacity: 0.1, margin: '4px 0 4px 26px'}}/>
     <Typography component={'p'} variant={'body1'}>
-        <span role={'img'} aria-label={'Clone on Repl.it'}>🚀</span>{' '}
-        <Link href={'https://repl.it/github/ui-schema/demo-cra'}>Repl.it Clone</Link>
+        <span role={'img'} aria-label={'rocket'}>🚀</span>{' '}
+        <Link href={'https://stackblitz.com/github/ui-schema/demo-cra'}>Run on Stackblitz</Link>
     </Typography>
     <hr style={{opacity: 0.1, margin: '4px 0 4px 26px'}}/>
     <Typography component={'p'} variant={'body1'}>
-        <GithubLogo/> <Link href={'https://github.com/ui-schema/demo-cra'}>Source of this demo</Link>
+        <GithubLogo fontSize={'small'}/> <Link href={'https://github.com/ui-schema/demo-cra'}>Source of this demo</Link>
     </Typography>
     <hr style={{opacity: 0.2}}/>
     <Typography component={'p'} variant={'body1'}>
@@ -26,7 +26,7 @@ const NavProject = () => <>
     </Typography>
     <hr style={{opacity: 0.1, margin: '4px 0 4px 26px'}}/>
     <Typography component={'p'} variant={'body1'}>
-        <GithubLogo/> <Link href={'https://github.com/ui-schema/ui-schema'}>Project, Issues</Link>
+        <GithubLogo fontSize={'small'}/> <Link href={'https://github.com/ui-schema/ui-schema'}>Project, Issues</Link>
     </Typography>
 </>;
 

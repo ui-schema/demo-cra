@@ -6,15 +6,9 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import Container from '@mui/material/Container'
-import DemoEditor from './Schema/DemoEditor'
-import UserSettings from './Schema/UserSettings'
-import NavProject from './component/NavProject'
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-} from 'react-router-dom';
-import {PageNotFound} from './component/PageNotFound';
+import DemoEditor from './components/DemoEditor'
+import LocalStorageForm from './components/LocalStorageForm'
+import NavProject from './components/NavProject'
 import {themeLight} from './theme';
 import {bindingComponents} from '@ui-schema/ds-material/Binding/Components'
 import {widgetsDefault} from '@ui-schema/ds-material/Binding/WidgetsDefault'
@@ -52,15 +46,14 @@ const validator = Validator([
     requiredValidatorLegacy,
 ])
 
-function PageMain() {
+function AppContents() {
     const [showSettings, setShowSettings] = React.useState(false);
     return (
-        <div className="App">
-            <header className="App-header">
-                <Typography component={'h1'} variant={'h6'}>
-                    UI-Schema + Material-UI Example
-                </Typography>
-            </header>
+        <UIMetaProvider
+            binding={customBinding}
+            t={browserT}
+            validate={validator.validate}
+        >
             <Container className="App-main" maxWidth={'md'} fixed>
                 <Paper style={{margin: 12, padding: 24}}>
                     <DemoEditor/>
@@ -71,13 +64,13 @@ function PageMain() {
                 </Paper>
 
                 <Paper style={{margin: 12, padding: 24}}>
-                    {showSettings ? <UserSettings/> : null}
+                    {showSettings ? <LocalStorageForm/> : null}
                     <Button variant={'contained'} onClick={() => setShowSettings(c => !c)}>
                         {showSettings ? 'Hide' : 'Show'} User Settings
                     </Button>
                 </Paper>
             </Container>
-        </div>
+        </UIMetaProvider>
     );
 }
 
@@ -85,18 +78,15 @@ function App() {
     return <StyledEngineProvider>
         <ThemeProvider theme={themeLight}>
             <CssBaseline/>
-            <UIMetaProvider
-                binding={customBinding}
-                t={browserT}
-                validate={validator.validate}
-            >
-                <Router>
-                    <Routes>
-                        <Route path="/" exact element={<PageMain/>}/>
-                        <Route path="/" element={<PageNotFound/>}/>
-                    </Routes>
-                </Router>
-            </UIMetaProvider>
+            <div className="App">
+                <header className="App-header">
+                    <Typography component={'h1'} variant={'h6'}>
+                        UI-Schema + Material-UI Example
+                    </Typography>
+                </header>
+
+                <AppContents/>
+            </div>
         </ThemeProvider>
     </StyledEngineProvider>
 }

@@ -9,6 +9,7 @@ import {storeUpdater} from '@ui-schema/react/storeUpdater'
 import {UIStoreProvider, createStore} from '@ui-schema/react/UIStore'
 import {GridContainer} from '@ui-schema/ds-material/GridContainer'
 import {isInvalid} from '@ui-schema/react/isInvalid'
+import {Box} from '@mui/material';
 
 const schema1 = {
     type: 'object',
@@ -180,6 +181,8 @@ const AppEditor = () => {
         <p>Loading Schema & Data</p>
     </div>
 
+    const invalid = isInvalid(store.getValidity())
+
     return <React.Fragment>
         <UIStoreProvider
             store={store}
@@ -195,11 +198,24 @@ const AppEditor = () => {
             */}
         </UIStoreProvider>
 
+        <Box mt={2} mb={1} sx={{display: 'flex'}}>
+            <Typography
+                variant={'body2'}
+                sx={{
+                    // mack background semantic using mui theme
+                    backgroundColor: invalid ? 'error.main' : 'success.main',
+                    color: invalid ? 'error.contrastText' : 'success.contrastText',
+                    p: 1,
+                    borderRadius: 3,
+                }}
+            >{invalid ? 'Form is invalid.' : 'Form is valid.'}</Typography>
+        </Box>
+
         <Button
             style={{marginTop: 24}}
             onClick={() => {
                 console.log('data-store: ', store.getValues() ? store.getValues().toJS() : undefined)
-                console.log('is-invalid: ', !!isInvalid(store.getValidity()))
+                console.log('is-invalid: ', !!invalid)
                 isInvalid(store.getValidity()) ?
                     setShowValidity(true) :
                     console.log('should do some action here')
@@ -212,7 +228,7 @@ const AppEditor = () => {
         </Typography>
         <hr style={{opacity: 0.2}}/>
         <Typography component={'p'} variant={'body1'}>
-            Code of this form/schema: <Link href={'https://github.com/ui-schema/demo-cra/blob/master/src/Schema/DemoEditor.js'}>src/Schema/DemoEditor.js</Link>
+            Code of this form/schema: <Link href={'https://github.com/ui-schema/demo-cra/blob/master/src/components/DemoEditor.jsx'}>src/components/DemoEditor.jsx</Link>
         </Typography>
     </React.Fragment>
 }

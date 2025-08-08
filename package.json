@@ -3,51 +3,37 @@
     "version": "0.5.0-alpha.1",
     "private": true,
     "dependencies": {
-        "@testing-library/jest-dom": "^4.2.4",
-        "@testing-library/react": "^9.5.0",
-        "@testing-library/user-event": "^7.2.1",
-        "@types/react": "^18.0",
-        "@types/react-dom": "^18.0",
-        "@mui/material": "^5.1",
-        "@mui/system": "^5.1",
-        "@mui/icons-material": "^5.1",
         "@emotion/react": "^11.9.0",
         "@emotion/styled": "^11.8.1",
+        "@mui/icons-material": "^5.1",
+        "@mui/material": "^5.1",
+        "@mui/system": "^5.1",
         "@ui-schema/dictionary": "~0.1.0-alpha.2",
         "@ui-schema/ds-material": "~0.5.0-alpha.2",
-        "@ui-schema/ui-schema": "~0.5.0-alpha.2",
-        "@ui-schema/react": "~0.5.0-alpha.2",
-        "@ui-schema/json-schema": "~0.5.0-alpha.2",
         "@ui-schema/json-pointer": "~0.5.0-alpha.2",
+        "@ui-schema/json-schema": "~0.5.0-alpha.2",
+        "@ui-schema/react": "~0.5.0-alpha.2",
+        "@ui-schema/ui-schema": "~0.5.0-alpha.2",
         "immutable": "^5.0",
         "react": "^18.0",
-        "react-dom": "^18.0",
-        "react-router-dom": "^6.3.0",
-        "react-scripts": "^5.0.1"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "__incompatible-with-modern-node--prebuild": "cross-env CI=true react-scripts test --coverage",
-        "build": "react-scripts build",
-        "test": "react-scripts test --coverage",
-        "eject": "react-scripts eject"
-    },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
+        "react-dom": "^18.0"
     },
     "devDependencies": {
-        "cross-env": "^7.0.2"
+        "@types/react": "^18.0",
+        "@types/react-dom": "^18.0",
+        "@vitejs/plugin-react": "^4.7.0",
+        "@vitest/browser": "^3.2.4",
+        "@vitest/coverage-v8": "^3.2.4",
+        "cross-env": "^7.0.2",
+        "playwright": "^1.54.2",
+        "vite": "^7.0.6",
+        "vitest": "^3.2.4",
+        "vitest-browser-react": "^1.0.1"
+    },
+    "scripts": {
+        "start": "cross-env NODE_ENV=development vite",
+        "prebuild": "vitest run --coverage",
+        "build": "cross-env NODE_ENV=production vite build",
+        "test": "vitest"
     }
 }
