@@ -1,6 +1,7 @@
 import React from 'react';
 import GitHubLogo from '@mui/icons-material/GitHub';
-import {Link, Typography} from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 
 const NavProject = () => <>
     <Typography component={'p'} variant={'body1'}>

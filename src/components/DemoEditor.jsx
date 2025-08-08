@@ -1,4 +1,5 @@
 import React from 'react'
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
@@ -9,7 +10,6 @@ import {storeUpdater} from '@ui-schema/react/storeUpdater'
 import {UIStoreProvider, createStore} from '@ui-schema/react/UIStore'
 import {GridContainer} from '@ui-schema/ds-material/GridContainer'
 import {isInvalid} from '@ui-schema/react/isInvalid'
-import {Box} from '@mui/material';
 
 const schema1 = {
     type: 'object',
