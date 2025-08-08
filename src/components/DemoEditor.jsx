@@ -202,7 +202,6 @@ const AppEditor = () => {
             <Typography
                 variant={'body2'}
                 sx={{
-                    // mack background semantic using mui theme
                     backgroundColor: invalid ? 'error.main' : 'success.main',
                     color: invalid ? 'error.contrastText' : 'success.contrastText',
                     p: 1,

@@ -11,7 +11,7 @@ Files:
 - [src/App.jsx](./src/App.jsx) setup `binding` and `UIMetaProvider`
 - [src/t.jsx](./src/t.jsx) dictionary setup
 
-Run on [CodeSandbox](https://codesandbox.io/s/github/ui-schema/demo-cra/tree/master/?autoresize=1&fontsize=12&hidenavigation=1&module=%2Fsrc%2FApp.jsx) or [StackBlitz](https://stackblitz.com/github/ui-schema/demo-cra).
+Run on [CodeSandbox](https://codesandbox.io/s/github/ui-schema/demo-cra/tree/master/?autoresize=1&fontsize=12&hidenavigation=1&module=%2Fsrc%2FApp.jsx) or [StackBlitz](https://stackblitz.com/github/ui-schema/demo-cra?file=%2Fsrc%2FApp.jsx).
 
 Explore more:
 
@@ -49,4 +49,10 @@ Then run tests:
 
 ```shell
 npm test
+```
+
+Or run tests in watch mode:
+
+```shell
+npm run tdd
 ```

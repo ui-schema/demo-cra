@@ -1,5 +1,4 @@
 import { expect, test } from 'vitest'
-import React from 'react';
 import { render } from 'vitest-browser-react'
 import App from './App';
 
@@ -12,10 +11,6 @@ test('renders header', async () => {
 test('Form is interactive', async () => {
     const {getByText} = render(<App/>);
 
-    // full test:
-    // - check that `Form is invalid.` exists in dom
-    // - toggle the element of "Center Item Content"
-    // - check that `Form is valid.` exists in dom
     const invalidText = getByText(/Form is invalid./i);
     await expect.element(invalidText).toBeInTheDocument();
 
