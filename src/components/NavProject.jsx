@@ -1,5 +1,5 @@
 import React from 'react';
-import GithubLogo from '@mui/icons-material/Github';
+import GitHubLogo from '@mui/icons-material/GitHub';
 import {Link, Typography} from '@mui/material';
 
 const NavProject = () => <>
@@ -14,7 +14,7 @@ const NavProject = () => <>
     </Typography>
     <hr style={{opacity: 0.1, margin: '4px 0 4px 26px'}}/>
     <Typography component={'p'} variant={'body1'}>
-        <GithubLogo fontSize={'small'}/> <Link href={'https://github.com/ui-schema/demo-cra'}>Source of this demo</Link>
+        <GitHubLogo fontSize={'small'}/> <Link href={'https://github.com/ui-schema/demo-cra'}>Source of this demo</Link>
     </Typography>
     <hr style={{opacity: 0.2}}/>
     <Typography component={'p'} variant={'body1'}>
@@ -26,7 +26,7 @@ const NavProject = () => <>
     </Typography>
     <hr style={{opacity: 0.1, margin: '4px 0 4px 26px'}}/>
     <Typography component={'p'} variant={'body1'}>
-        <GithubLogo fontSize={'small'}/> <Link href={'https://github.com/ui-schema/ui-schema'}>Project, Issues</Link>
+        <GitHubLogo fontSize={'small'}/> <Link href={'https://github.com/ui-schema/ui-schema'}>Project, Issues</Link>
     </Typography>
 </>;
 
